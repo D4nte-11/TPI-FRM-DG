@@ -5,13 +5,13 @@ def cargar_paises():
         with open("paises.csv", "r") as archivo:
             next(archivo)
         
-        for linea in archivo:
-            datos = linea.strip().split(",")
-            nombre = datos[0]
-            continente = datos[1]
-            poblacion = int(datos[2])
-            superficie = float(datos[3])
-        paises[nombre] = {"continente": continente, "poblacion": poblacion, "superficie": superficie}
+            for linea in archivo:
+                datos = linea.strip().split(",")
+                nombre = datos[0]
+                continente = datos[1]
+                poblacion = int(datos[2])
+                superficie = float(datos[3])
+                paises[nombre] = {"continente": continente, "poblacion": poblacion, "superficie": superficie}
     except FileNotFoundError:
         print("Error: Archivo no encontrado.")
         pass
@@ -21,7 +21,7 @@ def guardar_paises(paises):
     with open("paises.csv", "w") as archivo:
         archivo.write("nombre,continente,poblacion,superficie\n")
         for nombre, info in paises.items():
-            archivo.write(f"{nombre},{info['contienente']},{info['población']},{info['superficie']}\n")
+            archivo.write(f"{nombre},{info['continente']},{info['poblacion']},{info['superficie']}\n")
 
 def agregar_pais(paises, continentes):
     try:    
