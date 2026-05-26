@@ -21,7 +21,8 @@ Introduzca una opción: ''')
             print(agregar_pais(paises,  continentes=['Europa', 'America', 'Asia', 'Africa', 'Oceania']))
             guardar_paises(paises)
         case "2":
-            pass
+            print(actualizar_pais(paises))
+            guardar_paises(paises)
         case "3":
             buscar_pais(paises)
         case "4":

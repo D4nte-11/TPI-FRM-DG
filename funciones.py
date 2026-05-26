@@ -61,6 +61,43 @@ def agregar_pais(paises, continentes):
         paises[nombre] = {'continente':continente,'poblacion':poblacion,'superficie':superficie}
         return f'País {nombre} ha sido agregado correctamente'
 
+def actualizar_pais(paises):
+    while True:
+        actualizar = input("¿Qué país desea editar?: ").strip().title()
+        if actualizar.replace(" ","") in paises:
+            parametro_actualizar = input("Ingrese 1 para editar la población o ingrese 2 para editar el perímetro: ").strip()
+            break
+        else: print(f"Error: {actualizar} no se encuentra en el listado de países.")
+    while True:
+        contador = 0
+        match parametro_actualizar:
+            case "1":
+                while True:
+                    try:
+                        poblacion_nueva = int(input(f"Ingrese la nueva población de {actualizar}: ").strip().replace(",","").replace(".",""))
+                        if poblacion_nueva >= 0:
+                            paises[actualizar]["poblacion"] = poblacion_nueva
+                            contador = 1
+                            break
+                        else: print("Error: El valor ingresado debe ser mayor o igual a 0.")
+                    except ValueError:
+                        print("Error: El valor ingresado es incorrecto.")
+            case "2":
+                while True:
+                    try:
+                        superficie_nueva = float(input(f"Ingrese la nueva superficie de {actualizar}: "))
+                        if superficie_nueva > 0:
+                            paises[actualizar]["superficie"] = superficie_nueva
+                            break
+                    except ValueError:
+                        print("Error: El valor ingresado es incorrecto.")
+            case _:
+                print("Error: La opción ingresada no es válida.")
+                parametro_actualizar = parametro_actualizar = input("Ingrese 1 para editar la población o ingrese 2 para editar el perímetro: ").strip()
+        if contador != 0:
+            return f'País {actualizar} editado con éxito!'
+
+
 # Create acá abajo las funciones para el 3 5 y 6
 
 def buscar_pais(paises):
