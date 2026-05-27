@@ -28,9 +28,9 @@ Introduzca una opción: ''')
         case "4":
             pass
         case "5":
-            pass
+            ordenar_paises()
         case "6":
-            pass
+            mostrar_estadisticas()
         case "7":
             print("Gracias por usar nuestro programa. Hasta luego!")
             break
