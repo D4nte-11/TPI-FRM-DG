@@ -24,9 +24,9 @@ Introduzca una opción: ''')
             print(actualizar_pais(paises))
             guardar_paises(paises)
         case "3":
-            buscar_pais(paises)
-        case "4":
             pass
+        case "4":
+            filtrar_paises(paises,continentes=['Europa', 'America', 'Asia', 'Africa', 'Oceania'])
         case "5":
             pass
         case "6":

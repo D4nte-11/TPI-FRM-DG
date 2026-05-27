@@ -1,4 +1,5 @@
-
+class igualCero(Exception):
+    pass
 def cargar_paises():
     paises = {}
     try:
@@ -97,11 +98,59 @@ def actualizar_pais(paises):
         if contador != 0:
             return f'País {actualizar} editado con éxito!'
 
-
+def filtrar_paises(paises,continentes):
+    filtro = input('''
+1. Continente
+2. Rango de población
+3. Rango de superficie
+Ingrese cómo desea filtrar los países: ''').strip()
+    while True:
+        match filtro:
+            case "1":
+                continente = input("Ingrese el continente por el cual desea filtrar: ").strip().title()
+                if continente in continentes:
+                    for nombre, info in paises.items():
+                        if info['continente'] == continente:
+                            print(nombre)
+                    break
+                else: print("Error: El continente ingresado no existe.")
+            case "2":
+                while True:
+                    try:
+                        rango_pob_min = int(input("Ingrese el mínimo por el que desea buscar: ").strip().replace(",","").replace(".",""))
+                        rango_pob_max = int(input("Ingrese el máximo por el que desea buscar: ").strip().replace(",","").replace(".",""))
+                        if rango_pob_min >= 0 and rango_pob_max >= 0:
+                            for nombre, info in paises.items():
+                                if info['poblacion'] > rango_pob_min and info['poblacion'] < rango_pob_max:
+                                    print(f"{nombre}: {info['poblacion']}")
+                        else: raise igualCero("Error: El número ingresado debe ser mayor o igual a 0.")
+                    except ValueError:
+                        print("Error: El valor ingresado no es válido.")
+                    except igualCero as e:
+                        print(e)
+                    else: break
+                break
+            case "3":
+                while True:
+                    try:
+                        rango_sup_min = float(input("Ingrese el mínimo por el que desea buscar: ").strip())
+                        rango_sup_max = float(input("Ingrese el máximo por el que desea buscar: ").strip())
+                        if rango_sup_min > 0 and rango_sup_max > 0:
+                            for nombre, info in paises.items():
+                                if info['superficie'] > rango_sup_min and info['superficie'] < rango_sup_max:
+                                    print(nombre)
+                        else: raise igualCero("Error: El número ingresado debe ser mayor a 0.") 
+                    except ValueError:
+                        print("Error: El valor ingresado no es válido.")
+                    except igualCero as e:
+                        print(e)
+                    else: break
+                break
+            case _:
+                print("Error: la opción ingresada no es válida.")
+                filtro = input('''
+1. Continente
+2. Rango de población
+3. Rango de superficie
+Ingrese cómo desea filtrar los países: ''').strip()
 # Create acá abajo las funciones para el 3 5 y 6
-
-def buscar_pais(paises):
-    print('Buscar paises')
-    buscar = input('Ingrese el pais que quiere buscar: ').strip()
-    if buscar in paises:
-        pass
