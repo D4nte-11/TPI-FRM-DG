@@ -8,6 +8,8 @@ def cargar_paises():
         
             for linea in archivo:
                 datos = linea.strip().split(",")
+                if len(datos) != 4:
+                    continue
                 nombre = datos[0]
                 continente = datos[1]
                 poblacion = int(datos[2])
@@ -15,7 +17,7 @@ def cargar_paises():
                 paises[nombre] = {"continente": continente, "poblacion": poblacion, "superficie": superficie}
     except FileNotFoundError:
         print("Error: Archivo no encontrado.")
-        pass
+        return {}
     return paises
 
 def guardar_paises(paises):
@@ -63,9 +65,12 @@ def agregar_pais(paises, continentes):
         return f'País {nombre} ha sido agregado correctamente'
 
 def actualizar_pais(paises):
+    if not paises:
+        print("No hay países cargados para buscar.")
+        return
     while True:
         actualizar = input("¿Qué país desea editar?: ").strip().title()
-        if actualizar.replace(" ","") in paises:
+        if actualizar in paises:
             parametro_actualizar = input("Ingrese 1 para editar la población o ingrese 2 para editar el perímetro: ").strip()
             break
         else: print(f"Error: {actualizar} no se encuentra en el listado de países.")
@@ -89,6 +94,7 @@ def actualizar_pais(paises):
                         superficie_nueva = float(input(f"Ingrese la nueva superficie de {actualizar}: "))
                         if superficie_nueva > 0:
                             paises[actualizar]["superficie"] = superficie_nueva
+                            contador = 1
                             break
                     except ValueError:
                         print("Error: El valor ingresado es incorrecto.")
@@ -99,6 +105,9 @@ def actualizar_pais(paises):
             return f'País {actualizar} editado con éxito!'
 
 def filtrar_paises(paises,continentes):
+    if not paises:
+        print("No hay países cargados para buscar.")
+        return
     filtro = input('''
 1. Continente
 2. Rango de población
@@ -112,6 +121,7 @@ Ingrese cómo desea filtrar los países: ''').strip()
                     for nombre, info in paises.items():
                         if info['continente'] == continente:
                             print(nombre)
+                        else: print("No existen países en este continente. ")
                     break
                 else: print("Error: El continente ingresado no existe.")
             case "2":
@@ -174,30 +184,41 @@ def ordenar_paises(paises):
     if not paises:
         print("No hay países cargados para ordenar.")
         return
+    while True:
+        contador = 0
+        campo= input('''Ordenar por:
+    1) Nombre
+    2) Población
+    3) Superficie
+    Elija una opción: ''').strip()
+        orden = input("¿Orden descendente? (s/n): ").strip().lower()
+        reverse = True if orden == 's' else False
 
-    print("Ordenar por:\n1) Nombre\n2) Población\n3) Superficie")
-    campo = input("Elija campo (1-3): ").strip()
-    orden = input("¿Orden descendente? (s/N): ").strip().lower()
-    reverse = True if orden == 's' else False
-
-    if campo == '1':
-        items = sorted(paises.items(), key=lambda x: x[0], reverse=reverse)
-    elif campo == '2':
-        items = sorted(paises.items(), key=lambda x: x[1]["poblacion"], reverse=reverse)
-    elif campo == '3':
-        items = sorted(paises.items(), key=lambda x: x[1]["superficie"], reverse=reverse)
-    else:
-        print("Opción no válida. Volviendo al menú.")
-        return
-
-    print("\nListado de países ordenado:")
-    for nombre, info in items:
-        print(f"{nombre} - {info['continente']} - Población: {info['poblacion']} - Superficie: {info['superficie']}")
+        if campo == '1':
+            items = sorted(paises.items(), key=lambda x: x[0], reverse=reverse)
+        elif campo == '2':
+            items = sorted(paises.items(), key=lambda x: x[1]["poblacion"], reverse=reverse)
+        elif campo == '3':
+            items = sorted(paises.items(), key=lambda x: x[1]["superficie"], reverse=reverse)
+        else:
+            print("Error: La opción no es válida. ")
+            contador += 1
+        
+        if contador == 0:
+            print("\nListado de países ordenado:")
+            for nombre, info in items:
+                print(f"{nombre} - {info['continente']} - Población: {info['poblacion']} - Superficie: {info['superficie']}")
+            break
 
 def mostrar_estadisticas(paises):
     if not paises:
         print("No hay países cargados para mostrar estadísticas.")
         return
+    
+    continentes = {'Europa':0, 'America':0, 'Asia':0, 'Africa':0, 'Oceania':0}
+
+    for info in paises.values():
+        continentes[info['continente']] += 1
 
     total_paises = len(paises)
     suma_poblacion = sum(info['poblacion'] for info in paises.values())
@@ -213,6 +234,12 @@ def mostrar_estadisticas(paises):
 
     print(f'''\nEstadísticas generales: 
             Total de países: {total_paises}
+            Países por continente:
+                Europa: {continentes['Europa']}
+                América: {continentes['America']}
+                Asia: {continentes['Asia']}
+                África: {continentes["Africa"]}
+                Oceania: {continentes["Oceania"]}
             Población total: {suma_poblacion}
             Población promedio por país: {promedio_poblacion:.2f}
             País más poblado: {pais_mas_poblado} ({paises[pais_mas_poblado]['poblacion']})

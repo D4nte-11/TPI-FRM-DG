@@ -1,5 +1,5 @@
-from funciones import *
-paises = cargar_paises()
+import funciones as fun
+paises = fun.cargar_paises()
 
 print('''
 ================
@@ -18,19 +18,19 @@ Introduzca una opción: ''')
 
     match opcion:
         case "1":
-            print(agregar_pais(paises,  continentes=['Europa', 'America', 'Asia', 'Africa', 'Oceania']))
-            guardar_paises(paises)
+            print(fun.agregar_pais(paises,  continentes=['Europa', 'America', 'Asia', 'Africa', 'Oceania']))
+            fun.guardar_paises(paises)
         case "2":
-            print(actualizar_pais(paises))
-            guardar_paises(paises)
+            print(fun.actualizar_pais(paises))
+            fun.guardar_paises(paises)
         case "3":
-            pass
+            fun.buscar_pais(paises)
         case "4":
-            filtrar_paises(paises,continentes=['Europa', 'America', 'Asia', 'Africa', 'Oceania'])
+            fun.filtrar_paises(paises,continentes=['Europa', 'America', 'Asia', 'Africa', 'Oceania'])
         case "5":
-            ordenar_paises()
+            fun.ordenar_paises(paises)
         case "6":
-            mostrar_estadisticas()
+            fun.mostrar_estadisticas(paises)
         case "7":
             print("Gracias por usar nuestro programa. Hasta luego!")
             break
