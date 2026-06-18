@@ -154,7 +154,7 @@ Ingrese cómo desea filtrar los países: ''').strip()
                         rango_sup_max = float(input("Ingrese el máximo por el que desea buscar: ").strip())
                         if rango_sup_min > 0 and rango_sup_max > 0:
                             for nombre, info in paises.items():
-                                if info['superficie'] > rango_sup_min and info['superficie'] < rango_sup_max:
+                                if info['superficie'] >= rango_sup_min and info['superficie'] <= rango_sup_max:
                                     print(nombre)
                                     encontrado = True
                             if not encontrado:
