@@ -116,23 +116,29 @@ Ingrese cómo desea filtrar los países: ''').strip()
     while True:
         match filtro:
             case "1":
+                encontrado = False
                 continente = input("Ingrese el continente por el cual desea filtrar: ").strip().title()
                 if continente in continentes:
                     for nombre, info in paises.items():
                         if info['continente'] == continente:
                             print(nombre)
-                        else: print("No existen países en este continente. ")
+                            encontrado = True
+                    if not encontrado: print("No existen países en este continente. ")
                     break
                 else: print("Error: El continente ingresado no existe.")
             case "2":
                 while True:
                     try:
+                        encontrado = False
                         rango_pob_min = int(input("Ingrese el mínimo por el que desea buscar: ").strip().replace(",","").replace(".",""))
                         rango_pob_max = int(input("Ingrese el máximo por el que desea buscar: ").strip().replace(",","").replace(".",""))
                         if rango_pob_min >= 0 and rango_pob_max >= 0:
                             for nombre, info in paises.items():
                                 if info['poblacion'] > rango_pob_min and info['poblacion'] < rango_pob_max:
                                     print(f"{nombre}: {info['poblacion']}")
+                                    encontrado = True
+                            if not encontrado:
+                                print("\nNo se ha encontrado país con ese rango de habitantes. ")
                         else: raise igualCero("Error: El número ingresado debe ser mayor o igual a 0.")
                     except ValueError:
                         print("Error: El valor ingresado no es válido.")
@@ -143,12 +149,16 @@ Ingrese cómo desea filtrar los países: ''').strip()
             case "3":
                 while True:
                     try:
+                        encontrado = False
                         rango_sup_min = float(input("Ingrese el mínimo por el que desea buscar: ").strip())
                         rango_sup_max = float(input("Ingrese el máximo por el que desea buscar: ").strip())
                         if rango_sup_min > 0 and rango_sup_max > 0:
                             for nombre, info in paises.items():
                                 if info['superficie'] > rango_sup_min and info['superficie'] < rango_sup_max:
                                     print(nombre)
+                                    encontrado = True
+                            if not encontrado:
+                                print("\nNo se ha encontrado país en ese rango de superficie. ")
                         else: raise igualCero("Error: El número ingresado debe ser mayor a 0.") 
                     except ValueError:
                         print("Error: El valor ingresado no es válido.")
@@ -169,7 +179,7 @@ def buscar_pais(paises):
     if not paises:
         print("No hay países cargados para buscar.")
         return
-    buscar = input('Ingrese el país que quiere buscar (coincidencia exacta): ').strip().title()
+    buscar = input('Ingrese el país que desea buscar: ').strip().title()
     encontrado = False
     for nombre, informacion in paises.items():
         if buscar.lower() in nombre.lower():
@@ -178,9 +188,14 @@ def buscar_pais(paises):
             Población: {informacion['poblacion']}
             Superficie: {informacion['superficie']}
             ''')
-        encontrado = True
+            encontrado = True
     if not encontrado:
         print(f"No se encontró ningún país relacionado con '{buscar}'. ")
+
+def orden():
+    orden = input("¿Orden descendente? (s/n): ").strip().lower()
+    reverse = True if orden == 's' else False
+    return reverse
 
 def ordenar_paises(paises):
     if not paises:
@@ -193,19 +208,17 @@ def ordenar_paises(paises):
     2) Población
     3) Superficie
     Elija una opción: ''').strip()
-        orden = input("¿Orden descendente? (s/n): ").strip().lower()
-        reverse = True if orden == 's' else False
-
-        if campo == '1':
-            items = sorted(paises.items(), key=lambda x: x[0], reverse=reverse)
-        elif campo == '2':
-            items = sorted(paises.items(), key=lambda x: x[1]["poblacion"], reverse=reverse)
-        elif campo == '3':
-            items = sorted(paises.items(), key=lambda x: x[1]["superficie"], reverse=reverse)
-        else:
-            print("Error: La opción no es válida. ")
-            contador += 1
         
+        match campo:
+            case '1':
+                items = sorted(paises.items(), key=lambda x: x[0], reverse=orden())
+            case '2':
+                items = sorted(paises.items(), key=lambda x: x[1]["poblacion"], reverse=orden())
+            case '3':
+                items = sorted(paises.items(), key=lambda x: x[1]["superficie"], reverse=orden())
+            case _:
+                print("Error: La opción no es válida. ")
+                contador += 1
         if contador == 0:
             print("\nListado de países ordenado:")
             for nombre, info in items:
