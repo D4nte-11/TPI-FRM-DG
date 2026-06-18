@@ -169,16 +169,18 @@ def buscar_pais(paises):
     if not paises:
         print("No hay países cargados para buscar.")
         return
-    buscar = input('Ingrese el país que quiere buscar (coincidencia exacta): ').strip()
-    if buscar in paises:
-        informacion = paises[buscar]
-        print(f'''País: {buscar}
-        Continente: {informacion['continente']}
-        Población: {informacion['poblacion']}
-        Superficie: {informacion['superficie']}
-        ''')
-    else:
-        print(f"No se encontró el país '{buscar}'. La búsqueda exige coincidencia exacta.")
+    buscar = input('Ingrese el país que quiere buscar (coincidencia exacta): ').strip().title()
+    encontrado = False
+    for nombre, informacion in paises.items():
+        if buscar.lower() in nombre.lower():
+            print(f'''País: {nombre}
+            Continente: {informacion['continente']}
+            Población: {informacion['poblacion']}
+            Superficie: {informacion['superficie']}
+            ''')
+        encontrado = True
+    if not encontrado:
+        print(f"No se encontró ningún país relacionado con '{buscar}'. ")
 
 def ordenar_paises(paises):
     if not paises:
