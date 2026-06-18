@@ -3,7 +3,7 @@ class igualCero(Exception):
 def cargar_paises():
     paises = {}
     try:
-        with open("paises.csv", "r") as archivo:
+        with open("paises.csv", "r", encoding='utf-8') as archivo:
             next(archivo)
         
             for linea in archivo:
@@ -13,7 +13,7 @@ def cargar_paises():
                 nombre = datos[0]
                 continente = datos[1]
                 poblacion = int(datos[2])
-                superficie = float(datos[3])
+                superficie = int(datos[3])
                 paises[nombre] = {"continente": continente, "poblacion": poblacion, "superficie": superficie}
     except FileNotFoundError:
         print("Error: Archivo no encontrado.")
