@@ -71,7 +71,7 @@ def actualizar_pais(paises):
     while True:
         actualizar = input("¿Qué país desea editar?: ").strip().title()
         if actualizar in paises:
-            parametro_actualizar = input("Ingrese 1 para editar la población o ingrese 2 para editar el perímetro: ").strip()
+            parametro_actualizar = input("Ingrese 1 para editar la población o ingrese 2 para editar el superficie: ").strip()
             break
         else: print(f"Error: {actualizar} no se encuentra en el listado de países.")
     while True:
