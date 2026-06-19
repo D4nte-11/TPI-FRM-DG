@@ -119,12 +119,12 @@ Ingrese cómo desea filtrar los países: ''').strip()
                 encontrado = False
                 continente = input("Ingrese el continente por el cual desea filtrar: ").strip().title()
                 if continente in continentes:
-                    for nombre, info in paises.items():
-                        if info['continente'] == continente:
-                            print(f'''
+                    print(f'''
 ================
 || {continente} ||
 ================''')
+                    for nombre, info in paises.items():
+                        if info['continente'] == continente:
                             print(nombre)
                             encontrado = True
                     if not encontrado: print("No existen países en este continente. ")
@@ -137,12 +137,12 @@ Ingrese cómo desea filtrar los países: ''').strip()
                         rango_pob_min = int(input("Ingrese el mínimo por el que desea buscar: ").strip().replace(",","").replace(".",""))
                         rango_pob_max = int(input("Ingrese el máximo por el que desea buscar: ").strip().replace(",","").replace(".",""))
                         if rango_pob_min >= 0 and rango_pob_max >= 0:
-                            for nombre, info in paises.items():
-                                if info['poblacion'] >= rango_pob_min and info['poblacion'] <= rango_pob_max:
-                                    print('''
+                            print('''  
 ================
 || Población  ||
 ================''')
+                            for nombre, info in paises.items():
+                                if info['poblacion'] >= rango_pob_min and info['poblacion'] <= rango_pob_max:
                                     print(f"{nombre}: {info['poblacion']}")
                                     encontrado = True
                             if not encontrado:
@@ -161,12 +161,12 @@ Ingrese cómo desea filtrar los países: ''').strip()
                         rango_sup_min = float(input("Ingrese el mínimo por el que desea buscar: ").strip())
                         rango_sup_max = float(input("Ingrese el máximo por el que desea buscar: ").strip())
                         if rango_sup_min > 0 and rango_sup_max > 0:
-                            for nombre, info in paises.items():
-                                if info['superficie'] >= rango_sup_min and info['superficie'] <= rango_sup_max:
-                                    print('''
+                            print('''
 ================
 || Superficie ||
 ================''')
+                            for nombre, info in paises.items():
+                                if info['superficie'] >= rango_sup_min and info['superficie'] <= rango_sup_max:
                                     print(nombre)
                                     encontrado = True
                             if not encontrado:
