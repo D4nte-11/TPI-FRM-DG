@@ -121,6 +121,10 @@ Ingrese cómo desea filtrar los países: ''').strip()
                 if continente in continentes:
                     for nombre, info in paises.items():
                         if info['continente'] == continente:
+                            print(f'''
+================
+|| {continente} ||
+================''')
                             print(nombre)
                             encontrado = True
                     if not encontrado: print("No existen países en este continente. ")
@@ -134,7 +138,11 @@ Ingrese cómo desea filtrar los países: ''').strip()
                         rango_pob_max = int(input("Ingrese el máximo por el que desea buscar: ").strip().replace(",","").replace(".",""))
                         if rango_pob_min >= 0 and rango_pob_max >= 0:
                             for nombre, info in paises.items():
-                                if info['poblacion'] > rango_pob_min and info['poblacion'] < rango_pob_max:
+                                if info['poblacion'] >= rango_pob_min and info['poblacion'] <= rango_pob_max:
+                                    print('''
+================
+|| Población  ||
+================''')
                                     print(f"{nombre}: {info['poblacion']}")
                                     encontrado = True
                             if not encontrado:
@@ -155,6 +163,10 @@ Ingrese cómo desea filtrar los países: ''').strip()
                         if rango_sup_min > 0 and rango_sup_max > 0:
                             for nombre, info in paises.items():
                                 if info['superficie'] >= rango_sup_min and info['superficie'] <= rango_sup_max:
+                                    print('''
+================
+|| Superficie ||
+================''')
                                     print(nombre)
                                     encontrado = True
                             if not encontrado:
