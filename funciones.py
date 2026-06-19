@@ -102,7 +102,7 @@ def actualizar_pais(paises):
                 print("Error: La opción ingresada no es válida.")
                 parametro_actualizar = parametro_actualizar = input("Ingrese 1 para editar la población o ingrese 2 para editar el perímetro: ").strip()
         if contador != 0:
-            return f'País {actualizar} editado con éxito!'
+            return f'País {actualizar} editado con éxito!'      
 
 def filtrar_paises(paises,continentes):
     if not paises:
@@ -244,8 +244,6 @@ def mostrar_estadisticas(paises):
 
     pais_mas_poblado = max(paises.items(), key=lambda x: x[1]['poblacion'])[0]
     pais_menos_poblado = min(paises.items(), key=lambda x: x[1]['poblacion'])[0]
-    pais_mayor_superficie = max(paises.items(), key=lambda x: x[1]['superficie'])[0]
-    pais_menor_superficie = min(paises.items(), key=lambda x: x[1]['superficie'])[0]
 
     print(f'''\nEstadísticas generales: 
             Total de países: {total_paises}
@@ -256,11 +254,8 @@ def mostrar_estadisticas(paises):
                 África: {continentes["Africa"]}
                 Oceania: {continentes["Oceania"]}
             Población total: {suma_poblacion}
-            Población promedio por país: {promedio_poblacion:.2f}
+            Promedio de población: {promedio_poblacion:.2f}
             País más poblado: {pais_mas_poblado} ({paises[pais_mas_poblado]['poblacion']})
             País menos poblado: {pais_menos_poblado} ({paises[pais_menos_poblado]['poblacion']})
             Superficie total: {suma_superficie}
-            Promedio De superficie por país: {promedio_superficie:.2f}
-            País con mayor superficie: {pais_mayor_superficie} ({paises[pais_mayor_superficie]['superficie']})
-            País con menor superficie: {pais_menor_superficie} ({paises[pais_menor_superficie]['superficie']})
-        ''')
+            Promedio de superficie: {promedio_superficie:.2f}''')
